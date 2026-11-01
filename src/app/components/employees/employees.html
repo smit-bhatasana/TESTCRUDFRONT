@@ -1,0 +1,114 @@
+<div class="container">
+  <h2>Employee Management</h2>
+
+  <p class="error" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </p>
+
+  <form (ngSubmit)="saveEmployee()">
+
+    <div>
+      <label>Employee Name</label>
+
+      <input
+        type="text"
+        name="employeeName"
+        [(ngModel)]="employee.employeeName"
+        required
+      />
+    </div>
+
+    <div>
+      <label>Email</label>
+
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="employee.email"
+        required
+      />
+    </div>
+
+    <div>
+      <label>Salary</label>
+
+      <input
+        type="number"
+        name="salary"
+        [(ngModel)]="employee.salary"
+        min="0"
+        required
+      />
+    </div>
+
+    <div>
+      <label>Department</label>
+
+      <select
+        name="departmentId"
+        [(ngModel)]="employee.departmentId"
+        required
+      >
+        <option [ngValue]="0">Select Department</option>
+
+        <option
+          *ngFor="let dept of departments"
+          [ngValue]="dept.departmentId">
+
+          {{ dept.departmentName }}
+
+        </option>
+      </select>
+    </div>
+
+    <button type="submit">
+      {{ isEdit ? 'Update Employee' : 'Add Employee' }}
+    </button>
+
+    <button type="button" (click)="resetForm()">
+      Clear
+    </button>
+
+  </form>
+
+  <hr />
+
+  <h3>Employee List</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Salary</th>
+        <th>Department</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of employees">
+        <td>{{ item.employeeId }}</td>
+        <td>{{ item.employeeName }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.salary }}</td>
+        <td>{{ getDepartmentName(item.departmentId) }}</td>
+
+        <td>
+          <button
+            type="button"
+            (click)="editEmployee(item)">
+            Edit
+          </button>
+
+          <button
+            type="button"
+            (click)="deleteEmployee(item.employeeId)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

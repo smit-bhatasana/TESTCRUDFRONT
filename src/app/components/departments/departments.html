@@ -1,0 +1,77 @@
+<div class="container">
+  <h2>Department Management</h2>
+
+  <p class="error" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </p>
+
+  <form (ngSubmit)="saveDepartment()">
+
+    <div>
+      <label>Department Name</label>
+
+      <input
+        type="text"
+        name="departmentName"
+        [(ngModel)]="department.departmentName"
+        required
+      />
+    </div>
+
+    <div>
+      <label>Description</label>
+
+      <input
+        type="text"
+        name="description"
+        [(ngModel)]="department.description"
+      />
+    </div>
+
+    <button type="submit">
+      {{ isEdit ? 'Update Department' : 'Add Department' }}
+    </button>
+
+    <button type="button" (click)="resetForm()">
+      Clear
+    </button>
+
+  </form>
+
+  <hr />
+
+  <h3>Department List</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Department Name</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of departments">
+        <td>{{ item.departmentId }}</td>
+        <td>{{ item.departmentName }}</td>
+        <td>{{ item.description }}</td>
+
+        <td>
+          <button
+            type="button"
+            (click)="editDepartment(item)">
+            Edit
+          </button>
+
+          <button
+            type="button"
+            (click)="deleteDepartment(item.departmentId)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
